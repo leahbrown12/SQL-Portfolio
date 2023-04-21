@@ -1,0 +1,56 @@
+--Examining Employee Satisfaction
+
+--Finds the number of Active and Terminated employees reporting each satisfaction level
+Select Count(EmpSatisfaction) as "Number of Employees",EmpSatisfaction as "Employee Satisfaction" from HRDataset
+Group by EmpSatisfaction
+Order by EmpSatisfaction DESC;
+
+--Finds the top 10 reasons for termination and the average satisfaction of those employees
+SELECT TOP 10 COUNT(TermReason) AS "Number of Employees", Termreason as "Reason for Termination", AVG(EmpSatisfaction) as "Average Satisfaction" FROM HRDataset
+WHERE EmploymentStatus NOT LIKE 'Active'
+GROUP BY Termreason
+ORDER BY count(TermReason) DESC;
+
+
+--Exploring correlations between different factors of Satisfaction--
+
+--Finds the average salary for each satisfaction level
+Select EmpSatisfaction as "Employee Satisfaction", (Avg(Salary)) as "Average Salary" from HRDataset
+Group by EmpSatisfaction
+Order by [Employee Satisfaction] DESC;
+
+--Finds the average satisfaction of each department
+Select Avg(EmpSatisfaction) as "Average Employee Satisfaction", Department from HRDataset
+Group by Department
+Order by [Average Employee Satisfaction] DESC;
+
+--Finds the average satisfaction under each Manager and their corresponding department
+Select Avg(EmpSatisfaction) as "Average Employee Satisfaction", ManagerName, Department from HRDataset
+Group by ManagerName, Department
+Order by [Average Employee Satisfaction] DESC;
+
+--Finds the average satisfaction for each position
+Select Avg(EmpSatisfaction) as "Average Employee Satisfaction", Position from HRDataset
+Group by Position
+Order by [Average Employee Satisfaction] DESC;
+
+
+--Exploring potential effects of employee satisfaction--
+
+--Finds the average number of employee absenses for each satisfaction level
+Select EmpSatisfaction as "Employee Satisfaction", (Avg(Absences)) as "Average number of Absesnces" from HRDataset
+Group by EmpSatisfaction
+Order by [Employee Satisfaction] DESC;
+
+--Finds the average employee satisfaction for each performance score
+Select Avg(EmpSatisfaction) as "Average Employee Satisfaction", PerformanceScore from HRDataset
+Group by PerformanceScore
+Order by [Average Employee Satisfaction] DESC;
+
+--Finds the average engagement survey score for each satisfaction level
+Select EmpSatisfaction as "Satisfaction Level", Avg(EngagementSurvey) as "Average Engagement Survey Score" from HRDataset
+Group by EmpSatisfaction
+Order by [Satisfaction Level] DESC;
+
+
+
