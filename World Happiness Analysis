@@ -1,0 +1,78 @@
+--What is the global average happiness score? 
+Select round(avg(score),2) as "Global Average Happiness Score" from year_2019_data;
+--What are the 10 most happy countries and their scores?
+Select top 10 Country_or_region, Score from year_2019_data
+    Order by Score Desc;
+--What are the 10 least happy countries and their scores?
+Select top 10 Country_or_region, Score from year_2019_data
+    Order by Score ASC;
+--Is there any connection between generosity and GDP per capita?
+Select CASE
+ When Generosity >=0 and Generosity <=0.1 Then '0-0.1'
+ When Generosity >0.1 and Generosity <=0.2 Then '0.11-0.2'
+ When Generosity >0.2 and Generosity <=0.3 Then '0.21-0.3'
+ Else 'Over .3'
+ End as "Generosity Range",
+Round(avg(GDP_per_capita), 2) as "Average GDP per Capita" from Year_2019_Data
+Group by CASE 
+ When Generosity >=0 and Generosity <=0.1 Then '0-0.1'
+ When Generosity >0.1 and Generosity <=0.2 Then '0.11-0.2'
+ When Generosity >0.2 and Generosity <=0.3 Then '0.21-0.3'
+ Else 'Over .3'
+ End;
+--Is there any connection between healthy life expectancy and GDP per capita?
+Select CASE
+ When Healthy_life_expectancy >=0 and Healthy_life_expectancy <=0.1 Then '0-0.1'
+ When Healthy_life_expectancy >0.1 and Healthy_life_expectancy <=0.2 Then '0.11-0.2'
+ When Healthy_life_expectancy >0.2 and Healthy_life_expectancy <=0.3 Then '0.21-0.3'
+ When Healthy_life_expectancy >0.3 and Healthy_life_expectancy <=0.4 Then '0.31-0.4'
+ When Healthy_life_expectancy >0.4 and Healthy_life_expectancy <=0.5 Then '0.41-0.5'
+ When Healthy_life_expectancy >0.5 and Healthy_life_expectancy <=0.6 Then '0.51-0.6'
+ When Healthy_life_expectancy >0.6 and Healthy_life_expectancy <=0.7 Then '0.61-0.7'
+ When Healthy_life_expectancy >0.7 and Healthy_life_expectancy <=0.8 Then '0.71-0.8'
+ When Healthy_life_expectancy >0.8 and Healthy_life_expectancy <=0.9 Then '0.81-0.9'
+ When Healthy_life_expectancy >0.9 and Healthy_life_expectancy <=1 Then '0.91-1'
+ When Healthy_life_expectancy >1 and Healthy_life_expectancy <=1.1 Then '1.01-1.1'
+   Else 'Over 1.1'
+ End as "Healthy Life Expectancy Range", 
+round(avg(GDP_per_capita), 2) as "Average GDP per Capita" from Year_2019_Data
+Group by CASE 
+  When Healthy_life_expectancy >=0 and Healthy_life_expectancy <=0.1 Then '0-0.1'
+ When Healthy_life_expectancy >0.1 and Healthy_life_expectancy <=0.2 Then '0.11-0.2'
+ When Healthy_life_expectancy >0.2 and Healthy_life_expectancy <=0.3 Then '0.21-0.3'
+ When Healthy_life_expectancy >0.3 and Healthy_life_expectancy <=0.4 Then '0.31-0.4'
+ When Healthy_life_expectancy >0.4 and Healthy_life_expectancy <=0.5 Then '0.41-0.5'
+ When Healthy_life_expectancy >0.5 and Healthy_life_expectancy <=0.6 Then '0.51-0.6'
+ When Healthy_life_expectancy >0.6 and Healthy_life_expectancy <=0.7 Then '0.61-0.7'
+ When Healthy_life_expectancy >0.7 and Healthy_life_expectancy <=0.8 Then '0.71-0.8'
+ When Healthy_life_expectancy >0.8 and Healthy_life_expectancy <=0.9 Then '0.81-0.9'
+ When Healthy_life_expectancy >0.9 and Healthy_life_expectancy <=1 Then '0.91-1'
+ When Healthy_life_expectancy >1 and Healthy_life_expectancy <=1.1 Then '1.01-1.1'
+  Else 'Over 1.1'
+ End;
+--Is there any connection between healthy life expectancy and social support?
+Select CASE
+  When Social_support >=0 and Social_support <=0.2 Then '0-0.2'
+  When Social_support >0.2 and Social_support <=0.4 Then '0.21-0.4'
+  When Social_support >0.4 and Social_support <=0.6 Then '0.41-0.6'
+  When Social_support >0.6 and Social_support <=0.8 Then '0.61-0.8'
+  When Social_support >0.8 and Social_support <=1 Then '0.81-1'
+  When Social_support >1 and Social_support <=1.2 Then '1.01-1.2'
+  When Social_support >1.2 and Social_support <=1.4 Then '1.21-1.4'
+  When Social_support >1.4 and Social_support <=1.6 Then '1.41-1.6'
+    Else 'Over 1.6'
+  End as "Social Support Range",
+Round(avg(Healthy_life_expectancy),2) as "Average Healthy Life Expectancy" from year_2019_data 
+Group by CASE
+  When Social_support >=0 and Social_support <=0.2 Then '0-0.2'
+  When Social_support >0.2 and Social_support <=0.4 Then '0.21-0.4'
+  When Social_support >0.4 and Social_support <=0.6 Then '0.41-0.6'
+  When Social_support >0.6 and Social_support <=0.8 Then '0.61-0.8'
+  When Social_support >0.8 and Social_support <=1 Then '0.81-1'
+  When Social_support >1 and Social_support <=1.2 Then '1.01-1.2'
+  When Social_support >1.2 and Social_support <=1.4 Then '1.21-1.4'
+  When Social_support >1.4 and Social_support <=1.6 Then '1.41-1.6'
+    Else 'Over 1.6'
+ End;
+
+
