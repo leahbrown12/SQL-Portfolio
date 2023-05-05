@@ -1,0 +1,61 @@
+/* Analyzing time series data from Louisville Metro Animal Shelter (2019-2023)
+
+Functions used:
+
+Count
+Avg
+Year
+Day
+Datediff
+Where
+In
+As
+Group by
+Order by
+Select Into */
+
+--What was the average amount of time before adoption for dogs? Does animal size affect this? How about cats?
+
+/* Creating temporary table to list animal type, its outcome, and the number of days before it was adopted
+(not including those that return 0 as the number of days as this would indicate the animal has not left the shelter) */ 
+
+Select Datediff(day, indate, outdate) as "Days before Adoption", petsize, animaltype
+Into #Days_before_adoption
+from LMAS
+Where Datediff(day, indate, outdate)!=0 
+and animaltype in('Dog','Cat')
+and Outtype='Adoption';
+
+--Querying temp table to find the average number of days before adoption for Dogs and their size
+Select Petsize, avg("Days before Adoption") as "Average Number of Days Before Adoption" from #Days_before_adoption
+Where animaltype='Dog'
+Group by  petsize
+Order by "Average Number of Days Before Adoption";
+
+--Querying temp table to find the average number of days before adoption for cats and their size
+Select Petsize, avg("Days before Adoption") as "Average Number of Days Before Adoption" from #Days_before_adoption
+Where animaltype='Cat'
+Group by  petsize
+Order by "Average Number of Days Before Adoption";
+
+Drop table #Days_before_adoption;
+
+--What were the top 10 zip codes where dogs were found?
+Select top 10 jurisdiction as "ZIP Code", count(jurisdiction) as "Count" from LMAS
+where animaltype='DOG'
+Group by jurisdiction
+Order by count(jurisdiction) desc;
+
+--How many animals has LMAS saved each year? (foster, adoption, returned to owner)
+Select year(outdate) as "Year", count(outtype) as "Count" from LMAS
+Where outtype in ('RTO','ADOPTION','FOSTER')
+Group by year(outdate) 
+Order by year(outdate) desc;
+
+--How many and what type of animals were brought into the shelter each year?
+Select year(indate) as "Year",  animaltype as  "Animal Type", count(animaltype) as "Count" from LMAS
+Group by animaltype, year(indate)
+Order by year(indate) DESC;
+
+
+
