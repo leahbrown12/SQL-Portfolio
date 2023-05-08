@@ -8,16 +8,16 @@ Select top 10 Country_or_region, Score from year_2019_data
     Order by Score ASC;
 --Is there any connection between generosity and GDP per capita?
 Select CASE
- When Generosity >=0 and Generosity <=0.1 Then '0-0.1'
- When Generosity >0.1 and Generosity <=0.2 Then '0.11-0.2'
- When Generosity >0.2 and Generosity <=0.3 Then '0.21-0.3'
+ When Generosity Between 0 and 0.1 Then '0-0.1'
+ When Generosity Between 0.11 and 0.2 Then '0.11-0.2'
+ When Generosity Between 0.21 and 0.3 Then '0.21-0.3'
  Else 'Over .3'
  End as "Generosity Range",
 Round(avg(GDP_per_capita), 2) as "Average GDP per Capita" from Year_2019_Data
 Group by CASE 
- When Generosity >=0 and Generosity <=0.1 Then '0-0.1'
- When Generosity >0.1 and Generosity <=0.2 Then '0.11-0.2'
- When Generosity >0.2 and Generosity <=0.3 Then '0.21-0.3'
+When Generosity Between 0 and 0.1 Then '0-0.1'
+ When Generosity Between 0.11 and 0.2 Then '0.11-0.2'
+ When Generosity Between 0.21 and 0.3 Then '0.21-0.3'
  Else 'Over .3'
  End;
 --Is there any connection between healthy life expectancy and GDP per capita?
